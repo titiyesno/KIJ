@@ -6,7 +6,6 @@
 package kij_chat_client;
 
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,8 +15,8 @@ import java.util.Scanner;
  */
 public class Write implements Runnable {
     
-	private Scanner chat;
-        private PrintWriter out;
+	private final Scanner chat;
+        private final PrintWriter out;
         boolean keepGoing = true;
         ArrayList<String> log;
 	
@@ -36,8 +35,26 @@ public class Write implements Runnable {
 			while (keepGoing)//WHILE THE PROGRAM IS RUNNING
 			{						
 				String input = chat.nextLine();	//SET NEW VARIABLE input TO THE VALUE OF WHAT THE CLIENT TYPED IN
-				out.println(input);//SEND IT TO THE SERVER
-				out.flush();//FLUSH THE STREAM
+                            //String split = input.split(" ")[0];
+                            //System.out.println("Split[0]: " + split);
+                            switch (input.split(" ")[0].toLowerCase()) {
+                                case "login":
+                                //System.out.println("Ini login");
+                                    //System.out.println(input.split(" ")[1]);
+                                    String msg = input.split(" ")[1];
+                                    OneTimePadEnc enkrip = new OneTimePadEnc(msg);
+                                    Thread enc = new Thread(enkrip);
+                                    enc.start();
+                                    break;
+                                case "pm":
+                                    break;
+                                default:
+                                    out.println(input);//SEND IT TO THE SERVER
+                                    out.flush();//FLUSH THE STREAM
+                                    break;
+                            //out.println(input);//SEND IT TO THE SERVER
+                            //out.flush();//FLUSH THE STREAM
+                            }
                                 
                                 if (input.contains("logout")) {
                                     if (log.contains("true"))
@@ -48,7 +65,6 @@ public class Write implements Runnable {
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();//MOST LIKELY WONT BE AN ERROR, GOOD PRACTICE TO CATCH THOUGH
 		} 
 	}
 
