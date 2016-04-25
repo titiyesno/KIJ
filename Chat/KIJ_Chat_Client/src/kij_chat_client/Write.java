@@ -7,6 +7,7 @@ package kij_chat_client;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -19,6 +20,8 @@ public class Write implements Runnable {
         private final PrintWriter out;
         boolean keepGoing = true;
         ArrayList<String> log;
+        String ciper;
+        String siapkirim;
 	
 	public Write(Scanner chat, PrintWriter out, ArrayList<String> log)
 	{
@@ -41,10 +44,13 @@ public class Write implements Runnable {
                                 case "login":
                                 //System.out.println("Ini login");
                                     //System.out.println(input.split(" ")[1]);
-                                    String msg = input.split(" ")[1];
-                                    OneTimePadEnc enkrip = new OneTimePadEnc(msg);
-                                    Thread enc = new Thread(enkrip);
-                                    enc.start();
+                                    String msg = input.split(" ")[2];
+                                    ciper = OneTimePadEnc(msg);
+                                    //System.out.println(ciper);
+                                    siapkirim = input.split(" ")[0].toUpperCase() + " " + input.split(" ")[1] + " " + ciper;
+                                    System.out.println("Yang dikirim ke server: " + siapkirim);
+                                    out.println(siapkirim);
+                                    out.flush();
                                     break;
                                 case "pm":
                                     break;
@@ -67,5 +73,50 @@ public class Write implements Runnable {
 		{
 		} 
 	}
+        
+        public String OneTimePadEnc(String Msg){
+            //String Msg;
+    //String Psn;
+            String Key = "";
+            String CTxt = "";
+            Msg = Msg.toUpperCase();
+            //System.out.println(Msg);
+            
+            Random randomGenerator = new Random();
+            for(int idx = 1; idx <= Msg.length(); ++idx){
+                int randomInt = randomGenerator.nextInt(26);
+                Key = Key + (char)(65+randomInt);
+            }
+            //System.out.println("Key: \n" + Key);
+            
+            int temp;
+            char c;
+            int sum;
+            for(int i = 0; i < Msg.length(); i++){
+                sum = Msg.charAt(i) + Key.charAt(i);
+                
+                /*System.out.println("Sum: " + sum);
+                System.out.println("Msg.chartAt(i): " + Msg.charAt(i));
+                System.out.println("Key.chartAt(i): " + Key.charAt(i));*/
+                
+                if(sum >= 155){
+                    temp = sum - 90;
+                }
+                else{
+                    temp = sum - 64;
+                }
+                
+                //System.out.println("temp: " + temp);
+                
+                
+                c = (char) temp;
+                
+                //System.out.println("c: " + c);
+                
+                CTxt = CTxt + c;
+            }
+            return CTxt;
+            
+        }
 
 }
