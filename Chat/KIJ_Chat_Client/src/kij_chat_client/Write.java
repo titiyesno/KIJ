@@ -71,14 +71,16 @@ public class Write implements Runnable {
                                     out.flush();
                                     break;
                                 case "pm":
-                                    String pesan = input.split(" ")[2];
-                                    chp = AesCtr(pesan);
+                                    String[] pesan = input.split(" ",3);
+                                    chp = AesCtr(pesan[2]);
                                     //System.out.println(chp);
-                                    pesansiap = input.split(" ")[0].toUpperCase() + " " + input.split(" ")[1] + " " + chp;
+                                    pesansiap = pesan[0].toUpperCase() + " " + pesan[1] + " " + chp;
                                     //System.out.println("Yang dikirim ke server: " + pesansiap);
                                     out.println(pesansiap);
                                     out.flush();
                                     break;
+                            //out.println(input);//SEND IT TO THE SERVER
+                            //out.flush();//FLUSH THE STREAM
                             //out.println(input);//SEND IT TO THE SERVER
                             //out.flush();//FLUSH THE STREAM
                             }
@@ -151,7 +153,7 @@ public class Write implements Runnable {
             //SecretKeySpec key = new SecretKeySpec(keyBytes, "AES");
             IvParameterSpec ivSpec = new IvParameterSpec(ivBytes);
             Cipher cipher = Cipher.getInstance("AES/CTR/NoPadding");
-            System.out.println("input : " + new String(pesan));
+            //System.out.println("input : " + new String(pesan));
             KeyGenerator kg = KeyGenerator.getInstance("AES");
             SecretKey key = kg.generateKey();
             //System.out.println(key);
@@ -169,7 +171,7 @@ public class Write implements Runnable {
             byte[] cipherText = bOut.toByteArray();
             String encodedKey = Base64.getEncoder().encodeToString(key.getEncoded());
             String encodedMsg = Base64.getEncoder().encodeToString(cipherText);
-            System.out.println("cipher: " + new String(cipherText));
+            //System.out.println("cipher: " + new String(cipherText));
             String cipp = encodedMsg+" "+encodedKey;
             return cipp;
            }

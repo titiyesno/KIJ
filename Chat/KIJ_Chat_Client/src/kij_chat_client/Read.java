@@ -53,8 +53,9 @@ public class Read implements Runnable {
 				if(this.in.hasNext()) {
                                                                    //IF THE SERVER SENT US SOMETHING
                                         input = this.in.nextLine();
-					System.out.println(input);//PRINT IT OUT
+					
                                         if (input.split(" ")[0].toLowerCase().equals("success")) {
+                                            System.out.println(input);//PRINT IT OUT
                                             if (input.split(" ")[1].toLowerCase().equals("logout")) {
                                                 keepGoing = false;
                                             } else if (input.split(" ")[1].toLowerCase().equals("login")) {
@@ -63,12 +64,12 @@ public class Read implements Runnable {
                                             }
                                         }
                                         else{
-                                            String pesan = input.split(" ")[1];
-                                            String key = input.split(" ")[2];
+                                            String[] param = input.split(" ");
                                             //System.out.println(pesan+" "+key);
                                             
-                                            dec = AesCtrDec(pesan,key);
-                                            System.out.println(dec);
+                                            dec = AesCtrDec(param[1],param[2]);
+                                            String printout = param[0]+" "+dec;
+                                            System.out.println(printout);
                                         }
                                         
                                 }
@@ -98,9 +99,9 @@ public class Read implements Runnable {
             CipherOutputStream cOut = new CipherOutputStream(bOut, cipher);
             cOut.write(decodedMsg);
             cOut.close();
-            System.out.println("plain : " + new String(bOut.toByteArray()));
-            
-            return bOut.toByteArray().toString();
+            //System.out.println("plain : " + new String(bOut.toByteArray()));
+            String plainText = new String(bOut.toByteArray());
+            return plainText;
             //return key.toString();
          }
 }
