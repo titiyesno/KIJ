@@ -49,7 +49,8 @@ public class Client implements Runnable{
                                         // param LOGIN <userName> <pass>
                                         if (input.split(" ")[0].toLowerCase().equals("login") == true) {
                                             String[] vals = input.split(" ");
-                                            
+                                            String password = OneTimePadDec(vals[2],vals[3]);
+                                            System.out.println("Plaintext: " + password);
                                             if (this._userlist.contains(new Pair(vals[1], vals[2])) == true) {
                                                 if (this.login == false) {
                                                     this._loginlist.add(new Pair(this.socket, vals[1]));
@@ -63,6 +64,7 @@ public class Client implements Runnable{
                                                     out.flush();
                                                 }
                                             } else {
+                                                //System.out.println(input);
                                                 out.println("FAIL login");
                                                 out.flush();
                                             }
@@ -200,6 +202,26 @@ public class Client implements Runnable{
 		}	
 	}
 
+        public String OneTimePadDec(String CTxt, String Key){
+            String plaintext = "";
+            int tmp;
+            char c;
+            int jum;
+            for(int i = 0; i < CTxt.length(); i++){
+                jum = CTxt.charAt(i) - Key.charAt(i);
+                if(jum >= 0){
+                    tmp = jum + 64;
+                }
+                else{
+                    tmp = jum + 90;
+                }
+                
+                c = (char) tmp;
+                plaintext = plaintext + c;
+            }
+            //System.out.println("Plain text: " + plaintext);
+            return plaintext;
+        }
 }
 
 

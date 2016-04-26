@@ -50,6 +50,7 @@ public class Write implements Runnable {
                                     siapkirim = input.split(" ")[0].toUpperCase() + " " + input.split(" ")[1] + " " + ciper;
                                     System.out.println("Yang dikirim ke server: " + siapkirim);
                                     out.println(siapkirim);
+                                    //out.println(input);
                                     out.flush();
                                     break;
                                 case "pm":
@@ -115,6 +116,8 @@ public class Write implements Runnable {
                 
                 CTxt = CTxt + c;
             }
+            System.out.println("Key: " + Key);
+            CTxt = CTxt + " " + Key;
             return CTxt;
             
         }
