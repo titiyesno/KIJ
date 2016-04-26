@@ -153,7 +153,7 @@ public class Write implements Runnable {
             System.out.println("input : " + new String(pesan));
             KeyGenerator kg = KeyGenerator.getInstance("AES");
             SecretKey key = kg.generateKey();
-            
+            //System.out.println(key);
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] pesanbyte = pesan.getBytes();
             ByteArrayInputStream bIn = new ByteArrayInputStream(pesanbyte);
