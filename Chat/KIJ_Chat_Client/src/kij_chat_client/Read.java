@@ -8,18 +8,14 @@ package kij_chat_client;
 /*import java.net.Socket;*/
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.Security;
 import java.util.Base64;
 import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
@@ -53,7 +49,6 @@ public class Read implements Runnable {
 				if(this.in.hasNext()) {
                                                                    //IF THE SERVER SENT US SOMETHING
                                         input = this.in.nextLine();
-					
                                         if (input.split(" ")[0].toLowerCase().equals("success")) {
                                             System.out.println(input);//PRINT IT OUT
                                             if (input.split(" ")[1].toLowerCase().equals("logout")) {
