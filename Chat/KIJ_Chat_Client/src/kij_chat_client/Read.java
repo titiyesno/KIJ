@@ -45,6 +45,11 @@ public class Read implements Runnable {
                                                 log.add("true");
                                             }
                                         }
+                                        else{
+                                            String pesan = input.split(" ")[1];
+                                            String key = input.split(" ")[2];
+                                            System.out.println(pesan+" "+key);
+                                        }
                                         
                                 }
                                 

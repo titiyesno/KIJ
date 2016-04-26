@@ -20,6 +20,7 @@ import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -151,8 +152,9 @@ public class Write implements Runnable {
             Cipher cipher = Cipher.getInstance("AES/CTR/NoPadding");
             System.out.println("input : " + new String(pesan));
             KeyGenerator kg = KeyGenerator.getInstance("AES");
+            SecretKey key = kg.generateKey();
             
-            cipher.init(Cipher.ENCRYPT_MODE, kg.generateKey());
+            cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] pesanbyte = pesan.getBytes();
             ByteArrayInputStream bIn = new ByteArrayInputStream(pesanbyte);
             CipherInputStream cIn = new CipherInputStream(bIn, cipher);
@@ -164,9 +166,10 @@ public class Write implements Runnable {
             }
 
             byte[] cipherText = bOut.toByteArray();
-
+            byte[] skey = key.getEncoded();
+            
             System.out.println("cipher: " + new String(cipherText));
-            String cipp = cipherText.toString();
+            String cipp = cipherText.toString()+" "+skey.toString();
             return cipp;
            }
         
