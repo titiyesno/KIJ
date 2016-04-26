@@ -146,16 +146,16 @@ public class Write implements Runnable {
         public String AesCtr(String pesan) throws InvalidKeyException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, IOException{
             //Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider()); 
             //byte[] keyBytes = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17 };
-            //byte[] ivBytes = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x00, 0x01, 0x02, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
+            byte[] ivBytes = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x00, 0x01, 0x02, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
            
             //SecretKeySpec key = new SecretKeySpec(keyBytes, "AES");
-            //IvParameterSpec ivSpec = new IvParameterSpec(ivBytes);
+            IvParameterSpec ivSpec = new IvParameterSpec(ivBytes);
             Cipher cipher = Cipher.getInstance("AES/CTR/NoPadding");
             System.out.println("input : " + new String(pesan));
             KeyGenerator kg = KeyGenerator.getInstance("AES");
             SecretKey key = kg.generateKey();
             //System.out.println(key);
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+            cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
             byte[] pesanbyte = pesan.getBytes();
             ByteArrayInputStream bIn = new ByteArrayInputStream(pesanbyte);
             CipherInputStream cIn = new CipherInputStream(bIn, cipher);

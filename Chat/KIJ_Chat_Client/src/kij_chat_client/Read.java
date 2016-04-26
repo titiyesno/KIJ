@@ -68,7 +68,7 @@ public class Read implements Runnable {
                                             //System.out.println(pesan+" "+key);
                                             
                                             dec = AesCtrDec(pesan,key);
-                                            //System.out.println(dec);
+                                            System.out.println(dec);
                                         }
                                         
                                 }
@@ -83,12 +83,17 @@ public class Read implements Runnable {
         
          public String AesCtrDec(String pesan, String key) throws InvalidKeyException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, IOException
          {
+            byte[] ivBytes = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x00, 0x01, 0x02, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
+             
             byte[] decodedKey = Base64.getDecoder().decode(key);
             SecretKey key2 = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+            
             byte[] decodedMsg = Base64.getDecoder().decode(pesan);
-            System.out.print(decodedKey);
+            
+            IvParameterSpec ivSpec = new IvParameterSpec(ivBytes);
+            //System.out.print(decodedKey);
             Cipher cipher = Cipher.getInstance("AES/CTR/NoPadding");
-            cipher.init(Cipher.DECRYPT_MODE, key2);
+            cipher.init(Cipher.DECRYPT_MODE, key2, ivSpec);
             ByteArrayOutputStream bOut = new ByteArrayOutputStream();
             CipherOutputStream cOut = new CipherOutputStream(bOut, cipher);
             cOut.write(decodedMsg);
