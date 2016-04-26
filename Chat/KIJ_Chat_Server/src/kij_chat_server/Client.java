@@ -3,6 +3,7 @@ package kij_chat_server;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /** original ->http://www.dreamincode.net/forums/topic/262304-simple-client-and-server-chat-program/
@@ -49,9 +50,11 @@ public class Client implements Runnable{
                                         // param LOGIN <userName> <pass>
                                         if (input.split(" ")[0].toLowerCase().equals("login") == true) {
                                             String[] vals = input.split(" ");
-                                            String password = OneTimePadDec(vals[2],vals[3]);
-                                            System.out.println("Plaintext: " + password);
-                                            if (this._userlist.contains(new Pair(vals[1], vals[2])) == true) {
+                                            String password = OneTimePadDec(vals[2],vals[3]);  
+                                            //System.out.println("Plaintext: " + password);
+                                            String passwd = passwordYangBenar(password);
+                                            //System.out.println("Password yang benar: " + passwd);
+                                            if (this._userlist.contains(new Pair(vals[1], passwd)) == true) {
                                                 if (this.login == false) {
                                                     this._loginlist.add(new Pair(this.socket, vals[1]));
                                                     this.username = vals[1];
@@ -222,6 +225,21 @@ public class Client implements Runnable{
             //System.out.println("Plain text: " + plaintext);
             return plaintext;
         }
+        
+        public static String passwordYangBenar(String value) {
+            char[] array = value.toCharArray();
+            //array[0] = Character.toUpperCase(array[0]);
+            
+            //System.out.println(Arrays.toString(array));
+            for(int i = 0; i < array.length; i++){
+                if(i != 0){
+                    array[i] = Character.toLowerCase(array[i]);
+                }
+            }
+            //System.out.println(Arrays.toString(array));
+            //System.out.println("Array[0]: " + array[0]);
+            return new String(array);
+    }
 }
 
 

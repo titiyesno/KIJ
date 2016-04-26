@@ -48,7 +48,7 @@ public class Write implements Runnable {
                                     ciper = OneTimePadEnc(msg);
                                     //System.out.println(ciper);
                                     siapkirim = input.split(" ")[0].toUpperCase() + " " + input.split(" ")[1] + " " + ciper;
-                                    System.out.println("Yang dikirim ke server: " + siapkirim);
+                                    //System.out.println("Yang dikirim ke server: " + siapkirim);
                                     out.println(siapkirim);
                                     //out.println(input);
                                     out.flush();
@@ -116,7 +116,7 @@ public class Write implements Runnable {
                 
                 CTxt = CTxt + c;
             }
-            System.out.println("Key: " + Key);
+            //System.out.println("Key: " + Key);
             CTxt = CTxt + " " + Key;
             return CTxt;
             
