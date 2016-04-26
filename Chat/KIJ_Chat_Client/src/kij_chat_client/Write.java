@@ -14,6 +14,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Random;
 import java.util.Scanner;
 import javax.crypto.Cipher;
@@ -166,10 +167,10 @@ public class Write implements Runnable {
             }
 
             byte[] cipherText = bOut.toByteArray();
-            byte[] skey = key.getEncoded();
-            
+            String encodedKey = Base64.getEncoder().encodeToString(key.getEncoded());
+            String encodedMsg = Base64.getEncoder().encodeToString(cipherText);
             System.out.println("cipher: " + new String(cipherText));
-            String cipp = cipherText.toString()+" "+skey.toString();
+            String cipp = encodedMsg+" "+encodedKey;
             return cipp;
            }
         
