@@ -92,7 +92,7 @@ public class Write implements Runnable {
                                     chp = AesCtr(message[1]);
                                     //System.out.println(chp);
                                     pesansiap = message[0].toUpperCase() + " " + chp;
-                                    System.out.println("Yang dikirim ke server: " + pesansiap);
+                                    //System.out.println("Yang dikirim ke server: " + pesansiap);
                                     
                                     out.println(pesansiap);
                                     out.flush();

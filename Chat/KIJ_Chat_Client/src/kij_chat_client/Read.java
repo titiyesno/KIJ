@@ -49,7 +49,7 @@ public class Read implements Runnable {
 				if(this.in.hasNext()) {
                                                                    //IF THE SERVER SENT US SOMETHING
                                         input = this.in.nextLine();
-                                        System.out.println("Dari server: " + input);
+                                        //System.out.println("Dari server: " + input);
                                         //System.out.println("Split: " + input.split(" ")[1]);
                                         if (input.split(" ")[0].toLowerCase().equals("success")) {
                                             System.out.println(input);//PRINT IT OUT
@@ -65,6 +65,13 @@ public class Read implements Runnable {
                                             String[] msg = input.split(" ");
                                             dec = AesCtrDec(msg[2],msg[3]);
                                             String pln = msg[0] + " " + msg[1] + " " + dec;
+                                            System.out.println(pln);
+                                        }
+                                        else if(input.split(" ")[1].equals("@")){
+                                            //System.out.println("ini bm");
+                                            String[] msg = input.split(" ");
+                                            dec = AesCtrDec(msg[4],msg[5]);
+                                            String pln = msg[0] + " @ " + msg[2] + " " + msg[3] +" " + dec;
                                             System.out.println(pln);
                                         }
                                         else{
