@@ -78,6 +78,25 @@ public class Write implements Runnable {
                                     out.println(pesansiap);
                                     out.flush();
                                     break;
+                                case "gm" :
+                                    String[] psn = input.split(" ",3);
+                                    chp = AesCtr(psn[2]);
+                                    //System.out.println(chp);
+                                    pesansiap = psn[0].toUpperCase() + " " + psn[1] + " " + chp;
+                                    //System.out.println("Yang dikirim ke server: " + pesansiap);
+                                    out.println(pesansiap);
+                                    out.flush();
+                                    break;
+                                case "bm" :
+                                    String[] message = input.split(" ",2);
+                                    chp = AesCtr(message[1]);
+                                    //System.out.println(chp);
+                                    pesansiap = message[0].toUpperCase() + " " + chp;
+                                    System.out.println("Yang dikirim ke server: " + pesansiap);
+                                    
+                                    out.println(pesansiap);
+                                    out.flush();
+                                    break;
                             //out.println(input);//SEND IT TO THE SERVER
                             //out.flush();//FLUSH THE STREAM
                             //out.println(input);//SEND IT TO THE SERVER

@@ -49,6 +49,8 @@ public class Read implements Runnable {
 				if(this.in.hasNext()) {
                                                                    //IF THE SERVER SENT US SOMETHING
                                         input = this.in.nextLine();
+                                        System.out.println("Dari server: " + input);
+                                        //System.out.println("Split: " + input.split(" ")[1]);
                                         if (input.split(" ")[0].toLowerCase().equals("success")) {
                                             System.out.println(input);//PRINT IT OUT
                                             if (input.split(" ")[1].toLowerCase().equals("logout")) {
@@ -57,6 +59,13 @@ public class Read implements Runnable {
                                                 log.clear();
                                                 log.add("true");
                                             }
+                                        }
+                                        else if(input.split(" ")[1].toLowerCase().equals("<broadcast>:")){
+                                            //System.out.println("ini bm");
+                                            String[] msg = input.split(" ");
+                                            dec = AesCtrDec(msg[2],msg[3]);
+                                            String pln = msg[0] + " " + msg[1] + " " + dec;
+                                            System.out.println(pln);
                                         }
                                         else{
                                             String[] param = input.split(" ");
